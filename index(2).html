@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.qu {
+				width: 300px;
+				height: 300px;
+				position: absolute;
+				left: 35%;
+				top: 3%;
+				background: #00B7FF;
+			}
+			
+			a{
+				margin-left: 20px;
+			}
+			
+			.qu1 {
+				width: 300px;
+				height: 300px;
+				position: absolute;
+				left: 70%;
+				top: 3%;
+				background: yellowgreen;
+			}
+			
+			td {
+				border: 1px solid #000000;
+				width: 100px;
+			}
+			#wi{
+				margin-top: 200px;
+			}
+			.wl{
+				width: 300px;
+				height: 20px;
+				background: #00B7FF;
+			}
+			
+		</style>
+		<script src="javascripts/jquery.js"></script>
+	</head>
+
+	<body>
+		<div class="wo"></div>
+	</body>
+	<script>
+			
+					$.ajax({
+						type:"get",
+						url:"http://localhost:1000/wod/www",
+						,success:function(data){
+							console.log(data)
+							var hh = '';
+							for(var i = 0; i < data.length; i++) {
+								hh += "<tr><td>" + data[i].content + "</td><td>" + data[i].title + "</td><td><button id='shan' index=" + i + ">删除</button></td><td><button id='ww' index=" + data[i].id + ">修改</button></td></tr>";
+								arr.push(data[i].id)
+							}
+			
+							$(".wo").append(hh)
+						}
+					});
+				}
+				
+			})
+				
+				
+				
+				//删除ajax
+				$('.wo').delegate('#shan', 'click', function() {
+					var w = $(this).attr('index')
+					var t = $(this)
+					$.ajax({
+						type: "delete",
+						url: "http://localhost:1000/wod/delete?id=" + arr[w],
+						success: function(data) {
+							console.log(data)
+							if(data.msg == 1){
+								alert('删除成功')
+//								location.reload();
+								t.parent().parent().remove()
+							}
+							
+						}
+					});
+				})
+				
+				//跳转修改页面
+				$('.wo').delegate('#ww','click',function(){
+					
+					var t = $(this).attr('index')
+					
+					window.location.href = "xiugai.html?id="+$(this).attr('index');//所跳的页面加ID
+				})
+			}
+		});
+		
+		
+	</script>
+
+</html>

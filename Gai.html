@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script src="javascripts/jquery.js"></script>
+	<body>
+		<input type="text" id="content"/>
+		<input type="text" id="title"/>
+		<button id="en">完成</button>
+	</body>
+	<script>
+		var urll = location.search.substring(4);
+		$.ajax({
+			type:"post",
+			url:"http://localhost:1000/wod/gat",
+			data:{
+				"id":urll
+			},
+			success:function(data){
+				console.log(data)
+//				console.log(data[0].phone)
+				$('#content').val(data[0].username)
+				$('#title').val(data[0].phone)
+			}
+		});
+		
+		//修改
+		$('#en').click(function(){
+					$.ajax({
+						type: "post",
+						url: "http://localhost:1000/wod/gai",
+						data:{
+							"content":$('#content').val(),
+							"title":$('#title').val(),
+							"id":urll
+						},
+					
+						success: function(data) {
+									alert('修改成功')
+									
+									window.location.href = "index(2).html"
+							}
+							
+						}
+					});
+					
+		})
+	</script>
+</html>
